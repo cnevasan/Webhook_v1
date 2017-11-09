@@ -58,10 +58,13 @@ def processRequest(req):
 
     #if cdate is None:
     #    return {}
-    speech = "We will be in your city: " + city + " on " + date"!"
+    speech = "We will be in your city: "
+    #+ city + " on " + date"!"
     return {
         "speech": speech,
         "displayText": speech,
+        "City": city,
+        "Date": cdate,
         # "data": data,
         # "contextOut": [],
         "source": "apiai-weather-webhook-sample"
