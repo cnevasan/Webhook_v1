@@ -61,12 +61,12 @@ def processRequest(req):
     #else:
     #    return city
      
-    cdate = GetDate(city)
+    ddate = GetDate(city)
 
     #if cdate is None:
     #    return {}
-    speech = "We will be in your city:"+ city + " on " + cdate"!"
-    data = city+cdate
+    speech = "We will be in your city:"+ city + " on " + ddate"!"
+    data = city+ddate
     return {
         "speech": speech,
         "displayText": speech,
