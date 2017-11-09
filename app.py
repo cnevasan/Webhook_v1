@@ -53,19 +53,27 @@ def processRequest(req):
     if req.get("result").get("action") != "CheckCityDate":
         return {}
 
-    city = GetCity(req)
+    #result = req.get("result")
+    #parameters = result.get("parameters")
+    city = req.get("result").get("parameters").get("geo-city")
+    #if city is None:
+    #    return 'Jasper'
+    #else:
+    #    return city
+     
     cdate = GetDate(city)
 
     #if cdate is None:
     #    return {}
     speech = "We will be in your city: "
     #+ city + " on " + date"!"
+    data = city+cdate
     return {
         "speech": speech,
         "displayText": speech,
-        "City": city,
-        "Date": cdate,
-        # "data": data,
+        #"city": city,
+        #"cdate": cdate,
+         "data": data,
         # "contextOut": [],
         "source": "apiai-weather-webhook-sample"
            }
