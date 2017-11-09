@@ -72,7 +72,7 @@ def GetCity(req):
     parameters = result.get("parameters")
     city = parameters.get("geo-city")
     if city is None:
-        return None
+        return 'Jasper'
     else:
         return city
 
