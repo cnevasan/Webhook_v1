@@ -65,8 +65,7 @@ def processRequest(req):
 
     #if cdate is None:
     #    return {}
-    speech = "We will be in your city: "
-    #+ city + " on " + date"!"
+    speech = "We will be in your city:"+ city + " on " + date"!"
     data = city+cdate
     return {
         "speech": speech,
@@ -77,15 +76,6 @@ def processRequest(req):
         # "contextOut": [],
         "source": "apiai-weather-webhook-sample"
            }
-
-def GetCity(req):
-    result = req.get("result")
-    parameters = result.get("parameters")
-    city = parameters.get("geo-city")
-    if city is None:
-        return 'Jasper'
-    else:
-        return city
 
 def GetDate(city):
     d = {'Jasper':'05-Feb-2018','Edmonton':'12-Feb-2018','Saskatoon':'08-Mar-2018','Thunder Bay':'26-Mar-2018'}
