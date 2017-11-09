@@ -50,68 +50,38 @@ def webhook():
 
 
 def processRequest(req):
-    if req.get("result").get("action") != "yahooWeatherForecast":
-        return {}
-    baseurl = "https://query.yahooapis.com/v1/public/yql?"
-    yql_query = makeYqlQuery(req)
-    if yql_query is None:
-        return {}
-    yql_url = baseurl + urlencode({'q': yql_query}) + "&format=json"
-    result = urlopen(yql_url).read()
-    data = json.loads(result)
-    res = makeWebhookResult(data)
-    return res
-
-
-def makeYqlQuery(req):
-    result = req.get("result")
-    parameters = result.get("parameters")
-    city = parameters.get("geo-city")
-    if city is None:
-        return None
-
-    return "select * from weather.forecast where woeid in (select woeid from geo.places(1) where text='" + city + "') and u='c'"
-
-
-def makeWebhookResult(data):
-    query = data.get('query')
-    if query is None:
+    if req.get("result").get("action") != "CheckCityDate":
         return {}
 
-    result = query.get('results')
-    if result is None:
+    city = GetCity(req)
+    cdate = GetDate(city)
+
+    if cdate is None:
         return {}
-
-    channel = result.get('channel')
-    if channel is None:
-        return {}
-
-    item = channel.get('item')
-    location = channel.get('location')
-    units = channel.get('units')
-    if (location is None) or (item is None) or (units is None):
-        return {}
-
-    condition = item.get('condition')
-    if condition is None:
-        return {}
-
-    # print(json.dumps(item, indent=4))
-
-    speech = "Today in " + location.get('city') + ": " + condition.get('text') + \
-             ", the temperature is " + condition.get('temp') + " " + units.get('temperature')
-
-    print("Response:")
-    print(speech)
-
+    #yql_url = baseurl + urlencode({'q': yql_query}) + "&format=json"
+    #result = urlopen(yql_url).read()
+    speech = "We will be in your city: " + city + " on " + date"!"
     return {
         "speech": speech,
         "displayText": speech,
         # "data": data,
         # "contextOut": [],
         "source": "apiai-weather-webhook-sample"
-    }
+           }
 
+def GetCity(req):
+    result = req.get("result")
+    parameters = result.get("parameters")
+    city = parameters.get("geo-city")
+    if city is None:
+        return None
+    else:
+        return city
+
+def GetDate(city):
+    d = {'Terrace':'24-Jan-2018', 'Kitimat':'24-Jan-2018','Hazelton':'25-Jan-2018'}
+    cdate = d.get(city,'TBC')
+    return cdate
 
 if __name__ == '__main__':
     port = int(os.getenv('PORT', 5000))
