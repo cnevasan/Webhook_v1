@@ -53,14 +53,15 @@ def processRequest(req):
     if req.get("result").get("action") != "CheckCityDate":
         return {}
 
-    city = GetCity(req)
-    cdate = GetDate(city)
+    #city = GetCity(req)
+    #cdate = GetDate(city)
 
-    if cdate is None:
-        return {}
+    #if cdate is None:
+    #    return {}
     #yql_url = baseurl + urlencode({'q': yql_query}) + "&format=json"
     #result = urlopen(yql_url).read()
-    speech = "We will be in your city: " + city + " on " + date"!"
+    speech = "We will be in your city soon, dearie!"
+    #: " + city + " on " + date"!"
     return {
         "speech": speech,
         "displayText": speech,
@@ -79,7 +80,7 @@ def GetCity(req):
         return city
 
 def GetDate(city):
-    d = {'Terrace':'24-Jan-2018', 'Kitimat':'24-Jan-2018','Hazelton':'25-Jan-2018'}
+    d = {'Jasper':'05-Feb-2018','Edmonton':'12-Feb-2018','Saskatoon':'08-Mar-2018','Thunder Bay':'26-Mar-2018'}
     cdate = d.get(city,'TBC')
     return cdate
 
